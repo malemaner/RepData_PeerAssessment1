@@ -294,9 +294,11 @@ steps_median
 
 <h2>What is the average daily activity pattern?</h2>
 
-<p>1.Time series plot (i.e. type = &ldquo;l&rdquo; ) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
-2.It is imperative to note that we again will ignore <code>NA</code> values.
-3.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</p>
+<ol>
+<li> Time series plot (i.e. type = &ldquo;l&rdquo; ) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).</li>
+<li> It is imperative to note that we again will ignore <code>NA</code> values.</li>
+<li> Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</li>
+</ol>
 
 <pre><code class="r">#aggregating mean
 steps_pattern &lt;- aggregate(nike_data$steps ~ nike_data$interval, nike_data, FUN=mean, na.rm=T)
@@ -322,8 +324,10 @@ max_steps
 
 <h2>Imputing missing values</h2>
 
-<p>1.Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with <code>NA</code>s).
-First, let&#39;s calculate the total number of missing values there are.  This denotes the total number of observations that did not have any steps recorded (i.e. those rows which are <code>NA</code>)</p>
+<ol>
+<li> Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with <code>NA</code>s).
+First, let&#39;s calculate the total number of missing values there are.  This denotes the total number of observations that did not have any steps recorded (i.e. those rows which are <code>NA</code>)</li>
+</ol>
 
 <pre><code class="r">sum(is.na(nike_data$steps))
 </code></pre>
@@ -331,7 +335,9 @@ First, let&#39;s calculate the total number of missing values there are.  This d
 <pre><code>## [1] 2304
 </code></pre>
 
-<p>2.Devise a strategy for filling in all of the missing values in the dataset.</p>
+<ol>
+<li> Devise a strategy for filling in all of the missing values in the dataset.</li>
+</ol>
 
 <p>The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5- minute interval, etc
 The strategy that we will use to fill in the missing values in the data set is to replace all <code>NA</code> values with the mean of that particular 5-minute interval the observation falls on.  Now that we have devised this strategy, let&#39;s replace all of the <code>NA</code> values with the aforementioned strategy.</p>
@@ -340,7 +346,9 @@ The strategy that we will use to fill in the missing values in the data set is t
 sub_nas$steps &lt;- merge(steps_pattern, sub_nas)$average_steps
 </code></pre>
 
-<p>3.Create a new dataset that is equal to the original dataset but with the missing data filled in.</p>
+<ol>
+<li> Create a new dataset that is equal to the original dataset but with the missing data filled in.</li>
+</ol>
 
 <pre><code class="r"># create the new dataset 
 nike_data_fill &lt;- nike_data
@@ -348,7 +356,9 @@ nike_data_fill[is.na(nike_data),] &lt;- sub_nas
 daily_steps_fill &lt;- tapply(nike_data_fill$steps,nike_data_fill$date,function(x) sum(x,na.rm=TRUE))
 </code></pre>
 
-<p>4.Now that this is finished, let&#39;s plot a histogram of the new data:</p>
+<ol>
+<li> Now that this is finished, let&#39;s plot a histogram of the new data:</li>
+</ol>
 
 <pre><code class="r">hist(daily_steps_fill, breaks = 15, col=&quot;blue&quot;,xlab=&quot;Number of Steps (Mean = NAs)&quot;, main=&quot;Figure 3.a: Daily Steps&quot;)
 </code></pre>
@@ -362,9 +372,12 @@ daily_steps_fill &lt;- tapply(nike_data_fill$steps,nike_data_fill$date,function(
 
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
-<p>The dataset with the filled-in missing values is used. 
-1. A new factor variable is created in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day. 
-2. A panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo; ) of the 5-minute interval (x-axis) and the average number of steps taken is constructed, averaged across all weekday days or weekend days (y-axis).</p>
+<p>The dataset with the filled-in missing values is used.</p>
+
+<ol>
+<li><p>A new factor variable is created in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day. </p></li>
+<li><p>A panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo; ) of the 5-minute interval (x-axis) and the average number of steps taken is constructed, averaged across all weekday days or weekend days (y-axis).</p></li>
+</ol>
 
 <pre><code class="r">daytype &lt;- function(date) {
         if (weekdays(as.Date(date)) %in% c(&quot;sábado&quot;, &quot;domingo&quot;)) {

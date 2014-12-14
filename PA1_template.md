@@ -95,9 +95,9 @@ steps_median
 ```
 
 ## What is the average daily activity pattern?
-1.Time series plot (i.e. type = "l" ) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
-2.It is imperative to note that we again will ignore `NA` values.
-3.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+1.  Time series plot (i.e. type = "l" ) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
+2.  It is imperative to note that we again will ignore `NA` values.
+3.  Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
 
 ```r
@@ -128,7 +128,7 @@ max_steps
 
 ## Imputing missing values
 
-1.Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with `NA`s).
+1.  Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with `NA`s).
 First, let's calculate the total number of missing values there are.  This denotes the total number of observations that did not have any steps recorded (i.e. those rows which are `NA`)
 
 
@@ -140,7 +140,7 @@ sum(is.na(nike_data$steps))
 ## [1] 2304
 ```
 
-2.Devise a strategy for filling in all of the missing values in the dataset.
+2.  Devise a strategy for filling in all of the missing values in the dataset.
 
 The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5- minute interval, etc
 The strategy that we will use to fill in the missing values in the data set is to replace all `NA` values with the mean of that particular 5-minute interval the observation falls on.  Now that we have devised this strategy, let's replace all of the `NA` values with the aforementioned strategy.
@@ -150,7 +150,7 @@ The strategy that we will use to fill in the missing values in the data set is t
 sub_nas <- nike_data[is.na(nike_data),]
 sub_nas$steps <- merge(steps_pattern, sub_nas)$average_steps
 ```
-3.Create a new dataset that is equal to the original dataset but with the missing data filled in.
+3.  Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 ```r
 # create the new dataset 
@@ -158,7 +158,7 @@ nike_data_fill <- nike_data
 nike_data_fill[is.na(nike_data),] <- sub_nas
 daily_steps_fill <- tapply(nike_data_fill$steps,nike_data_fill$date,function(x) sum(x,na.rm=TRUE))
 ```
-4.Now that this is finished, let's plot a histogram of the new data:
+4.  Now that this is finished, let's plot a histogram of the new data:
 
 
 ```r
@@ -176,9 +176,11 @@ qplot(daily_steps_fill-step_day, binwidth = 1000, xlab='Total steps', ylab='Freq
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-The dataset with the filled-in missing values is used. 
-1. A new factor variable is created in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day. 
-2. A panel plot containing a time series plot (i.e. type = "l" ) of the 5-minute interval (x-axis) and the average number of steps taken is constructed, averaged across all weekday days or weekend days (y-axis).
+The dataset with the filled-in missing values is used.
+
+1.  A new factor variable is created in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day. 
+
+2.  A panel plot containing a time series plot (i.e. type = "l" ) of the 5-minute interval (x-axis) and the average number of steps taken is constructed, averaged across all weekday days or weekend days (y-axis).
 
 
 ```r
